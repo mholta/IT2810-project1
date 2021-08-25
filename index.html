@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Prosjekt 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="svg.css" />
+
+    <!-- Install fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=Rampart+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header>
+        <h1 class="main-title">Ola Nordmann</h1>
+        <div class="container sm">
+          <p>
+            Web developer based in Trodheim ready to make your next dream
+            project come true. 23 years of life exploration.
+          </p>
+        </div>
+      </header>
+      <div class="layout-grid">
+        <div class="layout-grid__box">
+          <div class="box-header">
+            <div class="box-header__circle"></div>
+            <h2 class="box-header__label">Canvas</h2>
+            <div class="box-header__circle"></div>
+          </div>
+          <div>
+            <canvas id="canvas"></canvas>
+          </div>
+        </div>
+        <div id="svg-box" class="layout-grid__box">
+          <div class="box-header">
+            <div class="box-header__circle"></div>
+            <h2 class="box-header__label">SVG</h2>
+            <div class="box-header__circle"></div>
+          </div>
+          <div id="svg-wrapper">
+            <svg width="600" height="400px" style="border: 1px solid black">
+              <!-- Intro text -->
+              <text id="svg-start-text" x="100" y="100">Click to start</text>
+
+              <!-- Floor -->
+              <rect
+                x="0"
+                y="360"
+                width="100%"
+                height="40"
+                class="rect--black"
+              />
+
+              <!-- Penguin -->
+              <g id="svg-penguin">
+                <g class="rect--black">
+                  <rect x="102" y="294" height="6" width="6" />
+                  <rect x="90" y="282" height="6" width="18" />
+                  <rect x="108" y="288" height="6" width="12" />
+                  <rect x="84" y="288" height="6" width="12" />
+                  <rect x="84" y="294" height="6" width="6" />
+                  <rect x="114" y="294" height="12" width="6" />
+                  <rect x="84" y="300" height="6" width="12" />
+                  <rect x="84" y="306" height="6" width="30" />
+                  <rect x="78" y="312" height="6" width="18" />
+                  <rect x="78" y="318" height="6" width="24" />
+                  <rect x="72" y="324" height="6" width="30" />
+                  <rect x="60" y="330" height="6" width="42" />
+                  <rect x="66" y="336" height="6" width="30" />
+                  <rect x="72" y="342" height="6" width="12" />
+                  <rect x="66" y="348" height="6" width="12" />
+                  <rect x="72" y="354" height="6" width="12" />
+                </g>
+                <g class="rect--grey">
+                  <rect x="96" y="312" height="6" width="18" />
+                  <rect x="102" y="318" height="6" width="18" />
+                  <rect x="102" y="324" height="6" width="18" />
+                  <rect x="102" y="330" height="6" width="18" />
+                  <rect x="96" y="336" height="6" width="24" />
+                  <rect x="84" y="342" height="6" width="36" />
+                  <rect x="78" y="348" height="6" width="36" />
+                  <rect x="84" y="354" height="6" width="12" />
+                </g>
+                <g class="rect--accent">
+                  <rect x="120" y="294" height="6" width="6" />
+                  <rect x="96" y="354" height="6" width="24" />
+                </g>
+
+                <animateMotion
+                  id="svg-penguin-jump-animation"
+                  dur=".8s"
+                  calcMode="spline"
+                  keyTimes="0;1"
+                  keySplines="0.1 0.8 0.5 0.1"
+                  repeatCount="once"
+                  fill="freeze"
+                  path="M 0 0 V -100 V 0"
+                />
+              </g>
+
+              <!-- Obstacle -->
+              <g class="rect--green">
+                <rect x="600" y="310" height="50" width="20" />
+                <animateMotion
+                  id="svg-obstacle-animation"
+                  dur="2s"
+                  repeatCount="1"
+                  path="M 0 0 H -620"
+                />
+              </g>
+
+              <!-- Sun -->
+              <circle
+                cx="550"
+                cy="50"
+                r="30"
+                stroke="black"
+                fill="transparent"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documentation -->
+      <button id="view-documentation"></button>
+      <div class="" id="documentation-wrapper">
+        <hr />
+        <div class="container docs">
+          <h2>Dokumentasjon</h2>
+          <h3>Bruk av CSS-grid og flexbox</h3>
+          <p>
+            Jeg brukte CSS-grid for å lage kolonner til de to boksene. Jeg
+            valgte å bruke CSS-grid da man enkelt kan bruke fraction units (fr)
+            for å lage kolonner med lik størrelse. Dette kan også oppnås med
+            flexbox og attributtene 'flex', 'flex-flow' eller 'flex-grow'. En
+            annen grunn til å velge CSS-grid over flexbox er at CSS-grid sin
+            'gap'-atributt har breder støtte i nettlesere enn flexbox sin
+            versjon.
+            <br />
+            <br />
+            Jeg brukte derimot flexbox i headeren på boksene for å midtstille
+            teksten og plassere sirklene riktig. Her brukte jeg
+            flexbox-atributtet 'justify-content: space-between;' for å skyve
+            sirklene til siden. Dette er (så godt som) ekvivalent med å bruke
+            CSS-grid og 'grid-template-columns: auto 1fr auto;' og
+            'justify-content: center;'.
+          </p>
+
+          <h3>Bruk av HTML5 canvas og SVG</h3>
+          <p>
+            Som gitt i oppgaveteksten er SVG-elementene hardkodet i
+            HTML-dokumentet, mens canvaset tegnes vha. JavaScript.
+            <br />
+            <br />
+            Canvaset består av 4 elementer, der noen element er mer sammensatt
+            enn andre. Pingvinen er satt sammen av et antall kvadrater med ulike
+            farger. For å gjøre dette implementerte jeg en metode som tar in en
+            matris med enten hex-verdi for farge eller nullverdi. I SVG-koden
+            ble pingvinen kodet med samme fremgangsmåte, men også ved bruk av
+            rektangler, da den var hardkodet.
+            <br />
+            <br />
+            Interaksjonen i både canvas-et og SVG-bildet er at pingvinen hopper
+            når man trykker i rammen. I canvas-versjonen kan man også hoppe ved
+            bruk av space, og det telles poeng. Jeg tok meg ikke tid til å
+            implementere kollisjon, poeng og tap i SVG-versjonen av bildet, men
+            her kunne man brukt jQuery til å finne posisjon og størrelse og
+            sjekket om det var overlapp mellom pingvinen og hinderne.
+            <br />
+            <br />
+            Animasjonene i SVG-bildet er laget ved bruk av
+            'animateMotion'-elementet. For å starte en fullført animasjon kaller
+            jeg 'beginElement()' på animasjonselementet. I canvas-versjonen av
+            bildet kalles derimot 'requestAnimationFrame(animate)' for å
+            simulere animasjon. Det som egentlig skjer her er at bildet tegnes
+            opp på nytt mange ganger i sekundet. For å simulere bevegelse må
+            koden hele tiden vite hvor den skal tegne opp elementet. Dette løste
+            jeg ved bruk av klasser for de dynamiske elementene (Player,
+            Obstacle). Simuleringen av gravitasjon og masse var her mye enklere,
+            da man enkelt kan få noe tilsvarende gravitasjon ved å gange dy med
+            en gravitasjonskonstant og en friksjon < 1 for å simulere energitap
+            etter hopp.
+          </p>
+          <h3>Bruk av jQuery</h3>
+          <p>
+            Jeg har i hovedsak brukt jQuery til å lytte etter
+            brukerinteraksjoner, som click, mouseenter og mouselave, samt å
+            finne elementer i DOM. Dette i stedet for å bruke JavaScript sin
+            'document.querySelector()'. 'fadeIn/-Out'-funksjonene var også
+            nyttige for å vise/skjule dokumentasjon.
+          </p>
+          <h3>Cross-browser-testing</h3>
+          <p>
+            Cross-browser-testing handler om å teste oppførsel, hastighet og
+            annet på ulike nettsleser. Dette for å utvikle produkt som er
+            tilgjengelige for så stor andel av brukergruppen som mulig. Jeg
+            testet nettsiden på Safari og Chrome. Testingen ble utført ved at
+            jeg åpnet siden og testet at alle funksjonene og interaksjonene på
+            siden var lik for de to nettleserne. Det var ikke relevant å teste
+            hastighet på denne øvingen.
+          </p>
+          <h3>Informasjonskilder brukt i øvingen</h3>
+          <ul>
+            <li>
+              <a href="https://www.w3schools.com/graphics/svg_intro.asp"
+                >W3Schools SVG-tutorial</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://stackoverflow.com/questions/8455773/svg-trigger-animation-with-event"
+                >Stack Overflow: Trigger SVG animation</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate"
+                >MDN Web Docs, SVG animateMotion</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API"
+                >MDN Web Docs, Canvas API</a
+              >
+            </li>
+            <li>
+              <a href="https://www.youtube.com/watch?v=3b7FyIxWW94"
+                >Youtube: How to code: Gravity (Chris Courses)</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <footer></footer>
+    </div>
+
+    <!-- Include jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Custom scripts -->
+    <script src="canvas.js"></script>
+    <script src="svg.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

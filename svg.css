@@ -1,0 +1,22 @@
+.rect--black {
+  fill: #222;
+}
+.rect--grey {
+  fill: #808080;
+}
+.rect--accent {
+  fill: #fcba03;
+}
+.rect--green {
+  fill: green;
+}
+#svg-start-text {
+  font-size: 2rem;
+  font-family: Courier, monospace;
+}
+#svg-wrapper {
+  cursor: pointer;
+}
+#svg-box {
+  overflow: hidden;
+}
