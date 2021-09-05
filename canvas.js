@@ -49,22 +49,55 @@ const Floor = () => {
   ctx.stroke();
 };
 
-/** Static sun element */
-const Sun = () => {
-  const margin = 20;
-  const radius = 30;
-  const centerX = canvasWidth - radius - margin;
-  const centerY = radius + margin;
-  const beams = 6;
+/** Sun class */
+class Sun {
+  margin = 0;
+  radius = 30;
+  origR = 30;
+  dR = 0;
+  centerX = 0;
+  centerY = 0;
+  isClicked = false;
 
-  /* Circle */
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
-  ctx.strokeStyle = co.b;
-  ctx.stroke();
+  constructor(margin, radius) {
+    this.margin = margin;
+    this.radius = radius;
+    this.origR = this.radius;
+    this.centerX = canvasWidth - this.radius - this.margin;
+    this.centerY = this.radius + this.margin;
+  }
+
+  draw() {
+    /* Circle */
+    ctx.beginPath();
+    ctx.arc(this.centerX, this.centerY, this.radius, 0, Math.PI * 2, false);
+    ctx.fillStyle = this.isClicked ? co.y : co.b;
+    ctx.fill();
+  }
+
+  update() {
+    this.radius = this.origR - (this.isClicked ? 0.1 * this.origR : 0);
+
+    this.draw();
+  }
+
+  click() {
+    this.isClicked = true;
+  }
+
+  unClick() {
+    this.isClicked = false;
+  }
+
+  containsCoordinates(x, y) {
+    return (
+      Math.abs(this.centerX - x) < this.radius &&
+      Math.abs(this.centerY - y) < this.radius
+    );
+  }
 
   /* TODO: Add sun beams */
-};
+}
 
 /** Display points */
 const Points = () => {
@@ -76,7 +109,6 @@ const Points = () => {
 /** Draw all static elements */
 const StaticBackground = () => {
   Floor();
-  Sun();
   Points();
 };
 
@@ -252,6 +284,7 @@ class Player {
 /* Arrays for holding moving elements in game */
 const obstacleArray = [];
 const player = [];
+let sun = new Sun(20, 30);
 
 const getPlayer = () => (player.length ? player[0] : null);
 
@@ -263,13 +296,34 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
+const getCanvasMouseEventPosition = (e) => {
+  const c = canvas.getBoundingClientRect();
+  const x = e.clientX - c.left;
+  const y = e.clientY - c.top;
+  return { x, y };
+};
+
+const hitsButton = (e) => {
+  const { x, y } = getCanvasMouseEventPosition(e);
+  return sun.containsCoordinates(x, y);
+};
+
 /* Jump if game is running, else start new game */
-canvas.addEventListener("click", () => {
+canvas.addEventListener("mousedown", (e) => {
   if (!gameState.gameLost && gameState.gameRunning) {
-    getPlayer()?.jump();
+    // If clicks button
+    if (hitsButton(e)) {
+      getPlayer()?.jump();
+      sun.click();
+    }
   } else {
     gameState.gameLost = false;
     start();
+  }
+});
+canvas.addEventListener("mouseup", (e) => {
+  if (!gameState.gameLost && gameState.gameRunning) {
+    sun.unClick();
   }
 });
 
@@ -298,6 +352,8 @@ const animate = () => {
     StaticBackground();
 
     getPlayer()?.update();
+
+    sun.update();
 
     obstacleArray.forEach((o) => o.update());
   } else {
